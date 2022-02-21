@@ -1,3 +1,5 @@
+package com.sogeti.todomanagerback;
+
 public class Todo {
     private boolean state;
     private String title;
