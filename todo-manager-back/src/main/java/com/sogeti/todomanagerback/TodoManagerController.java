@@ -24,12 +24,13 @@ public class TodoManagerController {
 	@GetMapping("/create-todo")
 	public void createTodo(@RequestParam(value = "title", defaultValue = "task") String title) {
 		// A TODO is always initialized with false (not done) status
-		todoList.add(new Todo(false, title));
+		todoList.add(new Todo(title, false));
 	}
 
 	@CrossOrigin("http://localhost:3000")
 	@GetMapping("/todo-state-change")
-	public void todoDone(@RequestParam(value = "title", defaultValue = "task") String title, @RequestParam(value="state", defaultValue="false")String state) {
+	public void todoDone(@RequestParam(value = "title", defaultValue = "task") String title,
+			@RequestParam(value = "state", defaultValue = "false") String state) {
 		for (Todo todo : todoList) {
 			if (todo.getTitle().equals(title)) {
 				todo.setState(Boolean.valueOf(state));
@@ -45,5 +46,11 @@ public class TodoManagerController {
 				todoList.remove(todo);
 			}
 		}
+	}
+
+	@CrossOrigin("http://localhost:3000")
+	@GetMapping("/clear-todo-list")
+	public void clearTodoList() {
+		this.todoList.clear();
 	}
 }

@@ -8,24 +8,26 @@ class TodoManager extends React.Component {
     super(props);
     this.state = { todolist: [] };
     this.getTODOList();
+
+    this.onTodoListChange = this.onTodoListChange.bind(this);
   }
 
-  getTODOList() {
+  async getTODOList() {
     fetch("http://localhost:8080/todo-manager/list-todo").then(response => response.json())
       .then(data => {
         this.setState({ todolist: data });
       }).catch(console.error);
   }
 
-  onTodoListChange(newTodoList) {
-    this.setState({ todolist: newTodoList });
+  onTodoListChange() {
+    this.getTODOList();
   }
 
   render() {
     return (
       <div>
-        <TodoDisplayComponent props={this.state.todolist, () => this.onTodoListChange} />
-        <TodoAddComponent props={this.state.todolist, () => this.onTodoListChange} />
+        <TodoDisplayComponent todolist={this.state.todolist} onTodoListChange={this.onTodoListChange} />
+        <TodoAddComponent todolist={this.state.todolist} onTodoListChange={this.onTodoListChange} />
       </div >
     );
   }

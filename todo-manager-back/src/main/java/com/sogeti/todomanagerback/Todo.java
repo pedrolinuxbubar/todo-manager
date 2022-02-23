@@ -1,19 +1,11 @@
 package com.sogeti.todomanagerback;
 
 public class Todo {
+	private String title;
     private boolean state;
-    private String title;
 
-    public Todo(boolean state, String title) {
-        this.state = state;
-        this.title = title;
-    }
-
-    public boolean isState() {
-        return this.state;
-    }
-
-    public void setState(boolean state) {
+    public Todo(String title, boolean state) {
+    	this.title = title;
         this.state = state;
     }
 
@@ -23,5 +15,13 @@ public class Todo {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    public boolean isState() {
+        return this.state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 }

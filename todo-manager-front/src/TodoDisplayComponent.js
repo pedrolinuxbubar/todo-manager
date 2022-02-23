@@ -3,21 +3,23 @@ import React from "react";
 class TodoDisplayComponent extends React.Component {
     constructor(props) {
         super(props);
+
+        console.log(this.props)
+
+        this.onTODOStateChange = this.onTODOStateChange.bind(this);
     }
 
     onTODOStateChange(title) {
-        console.log("title = " + title);
+        // console.log("onTODOStateChange title = " + title);
 
-        var checkbox = document.getElementById('cbx-' + title)
+        // let checkbox = document.getElementById('cbx-' + title)
+        // if (checkbox) {
+        //     let state = checkbox.getAttribute('checked');
 
-        if (checkbox) {
-            var state = checkbox.getAttribute('checked');
-
-            fetch("http://localhost:8080/todo-manager/todo-state-change?title=" + title + "&state=" + state).catch(console.error);
-        }
-
-        var newTodoList = Object.assign({}, this.props.todolist);
-        this.props.onTodoListChange(newTodoList);
+        //     console.log("avant onTODOStateChange fetch")
+        //     fetch("http://localhost:8080/todo-manager/todo-state-change?title=" + title + "&state=" + state).then(this.props.onTodoListChange()).catch(console.error);
+        //     console.log("apres onTODOStateChange fetch")
+        // }
     }
 
     render() {
@@ -28,7 +30,7 @@ class TodoDisplayComponent extends React.Component {
             <div>
                 <ul>
                     {this.props.todolist ? this.props.todolist.map(todo => {
-                        return <li>
+                        return <li key={todo.title}>
                             <label id={'lbl-' + todo.title}>{todo.title}</label>
                             <input id={'cbx-' + todo.title} type="checkbox" defaultChecked={todo.state} onClick={this.onTODOStateChange(todo.title)} />
                         </li>

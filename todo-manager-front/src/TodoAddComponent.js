@@ -3,15 +3,21 @@ import React from "react";
 class TodoAddComponent extends React.Component {
     constructor(props) {
         super(props);
+
+        console.log(this.props)
+
+        this.onAddTodoButtonClick = this.onAddTodoButtonClick.bind(this);
     }
 
     onAddTodoButtonClick() {
-        var value = document.getElementById('ipt-addtodo').value;
-        fetch("http://localhost:8080/todo-manager/create-todo?title=" + value).catch(console.error);
+        console.log("onAddTodoButtonClick");
 
-        var newTodoList = Object.assign({}, this.props.todolist);
-        newTodoList.push(value);
-        this.props.onTodoListChange(newTodoList);
+        let input = document.getElementById('ipt-addtodo');
+        let value = input.value;
+        console.log("avant onAddTodoButtonClick fetch")
+        fetch("http://localhost:8080/todo-manager/create-todo?title=" + value).then(this.props.onTodoListChange()).catch(console.error);
+        console.log("apres onAddTodoButtonClick fetch")
+        input.value = '';
     }
 
     render() {
