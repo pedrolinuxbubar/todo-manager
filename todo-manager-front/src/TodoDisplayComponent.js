@@ -14,13 +14,13 @@ class TodoDisplayComponent extends React.Component {
                 <ul>
                     {this.props.todolist ? this.props.todolist.map(todo => {
                         return <li key={todo.title}>
-                            <label id={'lbl-' + todo.title}>{todo.title}</label>
+                            <label id={'lbl-' + todo.title} style={{ "text-decoration": todo.state == true ? "line-through" : "" }}>{todo.title}</label>
                             <input id={'cbx-' + todo.title} name={todo.title} type="checkbox" defaultChecked={todo.state} onClick={this.onTODOStateChange.bind(this)} />
                         </li>
                     }) : <div></div>}
                 </ul>
             </div>
-        </div>);
+        </div >);
     }
 }
 

@@ -18,8 +18,20 @@ class TodoManager extends React.Component {
     this.onTodoListChange = this.onTodoListChange.bind(this)
   }
 
+  // sortTasks(a, b) {
+  //   if (a.state == "false" && b.state == "true") {
+  //     return -1;
+  //   }
+  //   else if (a.state == "true" && b.state == "false") {
+  //     return 1;
+  //   }
+  //   else {
+  //     return 0;
+  //   }
+  // }
+
   getTODOList() {
-    fetch("http://localhost:8080/todo-manager/list-todo").then(response => response.json())
+    fetch("http://localhost:8080/todo-manager/list-todo").then(response => response.json())/*.then(jsonObject => jsonObject.sort(this.sortTasks))*/
       .then(data => {
         this.setState({ todolist: data })
       }).catch(console.error)

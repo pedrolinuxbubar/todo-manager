@@ -13,11 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/todo-manager")
 public class TodoManagerController {
 	private List<Todo> todoList = new ArrayList<Todo>();
+	
+	private List<Todo> sortTodoList() {
+		List<Todo> sortedTodoList = new ArrayList<Todo>();
+		for (Todo todo : todoList) {
+			if(todo.isState()) {
+				sortedTodoList.add(todo);
+			}
+			else {
+				sortedTodoList.add(0, todo);
+			}
+		}
+		return sortedTodoList;
+	}
 
 	@CrossOrigin("http://localhost:3000")
 	@GetMapping("/list-todo")
 	public List<Todo> listTodo() {
-		return todoList;
+		return sortTodoList();
 	}
 
 	@CrossOrigin("http://localhost:3000")
