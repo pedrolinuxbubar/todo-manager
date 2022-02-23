@@ -12,7 +12,7 @@ class TodoManager extends React.Component {
     this.onTodoListChange = this.onTodoListChange.bind(this);
   }
 
-  async getTODOList() {
+  getTODOList() {
     fetch("http://localhost:8080/todo-manager/list-todo").then(response => response.json())
       .then(data => {
         this.setState({ todolist: data });

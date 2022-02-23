@@ -34,6 +34,7 @@ public class TodoManagerController {
 		for (Todo todo : todoList) {
 			if (todo.getTitle().equals(title)) {
 				todo.setState(Boolean.valueOf(state));
+				break;
 			}
 		}
 	}
