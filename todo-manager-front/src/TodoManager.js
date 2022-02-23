@@ -5,22 +5,28 @@ import TodoDisplayComponent from './TodoDisplayComponent';
 
 class TodoManager extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { todolist: [] };
-    this.getTODOList();
+    super(props)
 
-    this.onTodoListChange = this.onTodoListChange.bind(this);
+    let defaultTODOs = ['task 1', 'task 2', 'task 3'];
+    defaultTODOs.forEach(value =>
+      fetch("http://localhost:8080/todo-manager/create-todo?title=" + value)
+    )
+
+    this.state = { todolist: [] }
+    this.getTODOList()
+
+    this.onTodoListChange = this.onTodoListChange.bind(this)
   }
 
   getTODOList() {
     fetch("http://localhost:8080/todo-manager/list-todo").then(response => response.json())
       .then(data => {
-        this.setState({ todolist: data });
-      }).catch(console.error);
+        this.setState({ todolist: data })
+      }).catch(console.error)
   }
 
   onTodoListChange() {
-    this.getTODOList();
+    this.getTODOList()
   }
 
   render() {
