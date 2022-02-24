@@ -60,16 +60,21 @@ public class TodoManagerController {
 	@CrossOrigin("http://localhost:3000")
 	@GetMapping("/delete-todo")
 	public void deleteTodo(@RequestParam(value = "title", defaultValue = "task") String title) {
+		int i = 0;
 		for (Todo todo : todoList) {
 			if (todo.getTitle().equals(title)) {
-				todoList.remove(todo);
+				break;
+			}
+			else {
+				i++;
 			}
 		}
+		todoList.remove(i);
 	}
 
 	@CrossOrigin("http://localhost:3000")
 	@GetMapping("/todo-state-change")
-	public void todoDone(@RequestParam(value = "title", defaultValue = "task") String title,
+	public void todoStateChange(@RequestParam(value = "title", defaultValue = "task") String title,
 			@RequestParam(value = "state", defaultValue = "false") String state) {
 		for (Todo todo : todoList) {
 			if (todo.getTitle().equals(title)) {
