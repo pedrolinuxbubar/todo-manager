@@ -6,6 +6,8 @@ class TodoAddComponent extends React.Component {
 
         this.onAddTodoButtonClick = this.onAddTodoButtonClick.bind(this)
         this.onClearTodoListButtonClicked = this.onClearTodoListButtonClicked.bind(this)
+
+        this.state = { inputError: false }
     }
 
     onAddTodoButtonClick() {
@@ -13,9 +15,16 @@ class TodoAddComponent extends React.Component {
         let descriptionInput = document.getElementById('ipt-addtodo-description')
         let title = titleInput.value
         let description = descriptionInput.value
-        fetch("http://localhost:8080/todo-manager/create-todo?title=" + title + "&description=" + description).then(this.props.onTodoListChange()).catch(console.error)
-        titleInput.value = ''
-        descriptionInput.value = ''
+
+        if (title === '') {
+            this.setState({ inputError: true });
+        }
+        else {
+            fetch("http://localhost:8080/todo-manager/create-todo?title=" + title + "&description=" + description).then(this.props.onTodoListChange()).catch(console.error)
+            titleInput.value = ''
+            descriptionInput.value = ''
+            this.setState({ inputError: false });
+        }
     }
 
     onClearTodoListButtonClicked() {
@@ -27,6 +36,7 @@ class TodoAddComponent extends React.Component {
             <div>
                 <label>Title</label>
                 <input id={'ipt-addtodo-title'} />
+                <label>{this.state.inputError ? "Error : Title can't be empty" : <></>}</label>
             </div>
             <div>
                 <label>Description</label>
