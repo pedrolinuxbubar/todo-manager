@@ -9,10 +9,13 @@ class TodoAddComponent extends React.Component {
     }
 
     onAddTodoButtonClick() {
-        let input = document.getElementById('ipt-addtodo')
-        let value = input.value;
-        fetch("http://localhost:8080/todo-manager/create-todo?title=" + value).then(this.props.onTodoListChange()).catch(console.error)
-        input.value = ''
+        let titleInput = document.getElementById('ipt-addtodo-title')
+        let descriptionInput = document.getElementById('ipt-addtodo-description')
+        let title = titleInput.value
+        let description = descriptionInput.value
+        fetch("http://localhost:8080/todo-manager/create-todo?title=" + title + "&description=" + description).then(this.props.onTodoListChange()).catch(console.error)
+        titleInput.value = ''
+        descriptionInput.value = ''
     }
 
     onClearTodoListButtonClicked() {
@@ -21,9 +24,18 @@ class TodoAddComponent extends React.Component {
 
     render() {
         return (<div>
-            <input id={'ipt-addtodo'} />
-            <button id={'btn-addtodo'} onClick={this.onAddTodoButtonClick}>Add Todo</button>
-            <button id={'btn-cleartodo'} onClick={this.onClearTodoListButtonClicked}>Clear Todo list</button>
+            <div>
+                <label>Title</label>
+                <input id={'ipt-addtodo-title'} />
+            </div>
+            <div>
+                <label>Description</label>
+                <input id={'ipt-addtodo-description'} />
+            </div>
+            <div>
+                <button id={'btn-addtodo'} onClick={this.onAddTodoButtonClick}>Add Todo</button>
+                <button id={'btn-cleartodo'} onClick={this.onClearTodoListButtonClicked}>Clear Todo list</button>
+            </div>
         </div>);
     }
 }

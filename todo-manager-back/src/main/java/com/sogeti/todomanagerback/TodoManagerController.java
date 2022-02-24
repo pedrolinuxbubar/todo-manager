@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/todo-manager")
 public class TodoManagerController {
 	private List<Todo> todoList = new ArrayList<Todo>();
-	
+
 	private List<Todo> sortTodoList() {
 		List<Todo> sortedTodoList = new ArrayList<Todo>();
 		for (Todo todo : todoList) {
-			if(todo.isState()) {
+			if (todo.isState()) {
 				sortedTodoList.add(todo);
-			}
-			else {
+			} else {
 				sortedTodoList.add(0, todo);
 			}
 		}
@@ -34,22 +33,28 @@ public class TodoManagerController {
 	}
 
 	@CrossOrigin("http://localhost:3000")
-	@GetMapping("/create-todo")
-	public void createTodo(@RequestParam(value = "title", defaultValue = "task") String title) {
-		// A TODO is always initialized with false (not done) status
-		todoList.add(new Todo(title, false));
+	@GetMapping("/clear-todo-list")
+	public void clearTodoList() {
+		this.todoList.clear();
 	}
 
 	@CrossOrigin("http://localhost:3000")
-	@GetMapping("/todo-state-change")
-	public void todoDone(@RequestParam(value = "title", defaultValue = "task") String title,
-			@RequestParam(value = "state", defaultValue = "false") String state) {
+	@GetMapping("/create-todo")
+	public void createTodo(@RequestParam(value = "title", defaultValue = "My Task") String title,
+			@RequestParam(value = "description", defaultValue = "A super task") String description) {
+		// A TODO is always initialized with false (not done) status
+		todoList.add(new Todo(title, false, description));
+	}
+
+	@CrossOrigin("http://localhost:3000")
+	@GetMapping("/get-todo")
+	public Todo getTodo(@RequestParam(value = "title", defaultValue = "My Task") String title) {
 		for (Todo todo : todoList) {
 			if (todo.getTitle().equals(title)) {
-				todo.setState(Boolean.valueOf(state));
-				break;
+				return todo;
 			}
 		}
+		return null;
 	}
 
 	@CrossOrigin("http://localhost:3000")
@@ -63,8 +68,14 @@ public class TodoManagerController {
 	}
 
 	@CrossOrigin("http://localhost:3000")
-	@GetMapping("/clear-todo-list")
-	public void clearTodoList() {
-		this.todoList.clear();
+	@GetMapping("/todo-state-change")
+	public void todoDone(@RequestParam(value = "title", defaultValue = "task") String title,
+			@RequestParam(value = "state", defaultValue = "false") String state) {
+		for (Todo todo : todoList) {
+			if (todo.getTitle().equals(title)) {
+				todo.setState(Boolean.valueOf(state));
+				break;
+			}
+		}
 	}
 }
